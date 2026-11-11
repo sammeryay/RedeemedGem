@@ -205,7 +205,7 @@ public final class Gems {
         var cfg = pl.getConfig();
 
         // 1) material + custom_model_data
-        if (cfg.getStringList("bliss-gem-detect.materials").contains(it.getType().name()) && m.hasCustomModelDataComponent()) {
+        if (cfg.getStringList("bliss-gem-detect.materials").contains(it.getType().name())) {
             List<Integer> ids = cfg.getIntegerList("bliss-gem-detect.model-data");
             for (Float f : m.getCustomModelDataComponent().getFloats()) if (ids.contains(Math.round(f))) return true;
         }
@@ -248,8 +248,8 @@ public final class Gems {
         if (m == null) return out;
         out.add("Name: " + plain(m.displayName()) + " | item name: " + (m.hasItemName() ? plain(m.itemName()) : "-"));
         out.add("Item model: " + (m.hasItemModel() ? m.getItemModel() : "-"));
-        if (m.hasCustomModelDataComponent()) out.add("Custom model data: " + m.getCustomModelDataComponent().getFloats());
-        else out.add("Custom model data: -");
+        List<Float> cmd = m.getCustomModelDataComponent().getFloats();
+        out.add("Custom model data: " + (cmd.isEmpty() ? "-" : cmd));
         List<String> keys = new ArrayList<>();
         for (NamespacedKey k : m.getPersistentDataContainer().getKeys()) keys.add(k.toString());
         out.add("PDC keys: " + (keys.isEmpty() ? "-" : String.join(", ", keys)));
